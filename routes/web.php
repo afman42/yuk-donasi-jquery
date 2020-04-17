@@ -26,3 +26,8 @@ Route::get('/tes', function () {
 Route::get('/login', function () {
     return view('layouts.login');
 });
+
+Route::prefix('admin')->group(function () {
+    Route::get('penggalang-dana','AdminController@penggalang_dana')->name('admin.penggalang');
+    Route::get('donatur','AdminController@donatur')->name('admin.donatur');
+});
