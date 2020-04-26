@@ -20,8 +20,13 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
+
     @include('partial._nav')
-    @include('partial._aside')
+    {{-- halaman Admin --}}
+    {{-- @include('partial._aside') --}}
+
+    {{-- halaman penggalang dana --}}
+    @include('partial._aside_penggalang_dana')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
