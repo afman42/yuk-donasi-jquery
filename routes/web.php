@@ -25,4 +25,11 @@ Route::prefix('penggalang-dana')->group(function () {
     Route::get('/','PenggalangDanaController@beranda')->name('penggalang-dana.beranda');
     Route::get('pengaturan-akun','PenggalangDanaController@pengaturan_akun')->name('penggalang-dana.pengaturan-akun');
     Route::get('posting-donasi','PenggalangDanaController@posting_donasi')->name('penggalang-dana.posting-donasi');
+    
+    //Bank Routes
+    Route::resource('bank','BankController')->only(['index','store']);
+    Route::get('bank/{id}/edit','BankController@show');
+    Route::post('bank/update','BankController@update');
+    Route::post('bank/destroy/{id}','BankController@destroy');
+    Route::get('getbank/{id}','BankController@getbank');
 });
