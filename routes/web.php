@@ -19,6 +19,14 @@ Route::get('/login', function () {
 Route::prefix('admin')->group(function () {
     Route::get('penggalang-dana','AdminController@penggalang_dana')->name('admin.penggalang');
     Route::get('donatur','AdminController@donatur')->name('admin.donatur');
+
+    //Berita Routes
+    Route::resource('berita','BeritaController')->only(['index','store']);
+    Route::get('beritaid','BeritaController@beritaid')->name('berita.beritaid');
+    Route::get('berita/{id}/edit','BeritaController@show');
+    Route::post('berita/update','BeritaController@update');
+    Route::post('berita/destroy/{id}','BeritaController@destroy');
+    Route::get('getberita/{id}','BeritaController@getbank');
 });
 
 Route::prefix('penggalang-dana')->group(function () {
