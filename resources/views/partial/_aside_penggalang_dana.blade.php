@@ -39,7 +39,13 @@
           <li class="nav-item">
             <a href="{{ route('penggalang-dana.pengaturan-akun') }}" class="nav-link" id="pengaturan">
                 <i class="fas fa-cog nav-icon"></i>
-                <p>Pengaturan Akun</p>
+                <p>Ubah Password</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('penggalang-dana.profil') }}" class="nav-link" id="profil">
+                <i class="fas fa-user nav-icon"></i>
+                <p>Profil</p>
             </a>
           </li>
           <li class="nav-item">

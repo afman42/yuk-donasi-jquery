@@ -34,6 +34,9 @@ Route::prefix('penggalang-dana')->group(function () {
     Route::get('pengaturan-akun','PenggalangDanaController@pengaturan_akun')->name('penggalang-dana.pengaturan-akun');
     Route::get('posting-donasi','PenggalangDanaController@posting_donasi')->name('penggalang-dana.posting-donasi');
     
+    
+    Route::get('profil','BiodataDonaturController@index')->name('penggalang-dana.profil');
+    Route::post('profil','BiodataDonaturController@store')->name('penggalang-dana.profil-post');
     //Bank Routes
     Route::resource('bank','BankController')->only(['index','store']);
     Route::get('bank/{id}/edit','BankController@show');
