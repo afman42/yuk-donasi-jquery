@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Models\Pengguna;
+use Illuminate\Support\Facades\Hash;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $user = new Pengguna();
+        $user->username = "admin";
+        $user->password = Hash::make('admin123');
+        $user->hak_akses = 1;
+        $user->status_aktif = 0;
+        $user->save();
     }
 }

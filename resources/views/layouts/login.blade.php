@@ -7,6 +7,8 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
@@ -25,9 +27,10 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Silakan Masuk</p>
 
-      <form action="#" method="post">
+      <form action="{{ route('admin.login') }}" method="post">
+        {{ csrf_field() }}
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="text" class="form-control" name="username" placeholder="Masukan Username">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -35,22 +38,17 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" name="password" placeholder="Masukan Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
             </div>
           </div>
         </div>
-        
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Masuk</button>
+        </div>
       </form>
-
-      <p class="mb-1">
-        <a href="forgot-password.html">Lupa Password</a>
-      </p>
-      <p class="mb-0">
-        <a href="register.html" class="text-center">Registrasi</a>
-      </p>
     </div>
     <!-- /.login-card-body -->
   </div>

@@ -25,7 +25,7 @@
                with font-awesome or any other icon font library -->
           {{-- Admin --}}
           <li class="nav-item">
-              <a href="./index.html" class="nav-link" id="beranda">
+            <a href="{{ route('admin.index') }}" class="nav-link" id="beranda">
                   <i class="fas fa-tachometer-alt nav-icon"></i>
                   <p>Beranda</p>
               </a>
@@ -60,7 +60,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="./index.html" class="nav-link" id="berita">
+            <a href="{{ route('berita.index') }}" class="nav-link" id="berita">
                 <i class="fas fa-newspaper nav-icon"></i>
                 <p>Berita</p>
             </a>

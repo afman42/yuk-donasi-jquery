@@ -23,10 +23,10 @@
 
     @include('partial._nav')
     {{-- halaman Admin --}}
-    {{-- @include('partial._aside') --}}
+    @include('partial._aside')
 
     {{-- halaman penggalang dana --}}
-    @include('partial._aside_penggalang_dana')
+    {{-- @include('partial._aside_penggalang_dana') --}}
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
