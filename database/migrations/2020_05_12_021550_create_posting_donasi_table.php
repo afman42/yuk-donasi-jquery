@@ -24,6 +24,7 @@ class CreatePostingDonasiTable extends Migration
             $table->integer('bank_id');
             $table->integer('masukan_donasi_id');
             $table->integer('user_id');
+            $table->integer('publish');
             $table->timestamps();
         });
     }

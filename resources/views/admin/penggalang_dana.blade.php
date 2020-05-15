@@ -20,6 +20,7 @@ YKI | Penggalang Dana
       <h3 class="card-title">Akun Penggalang Dana</h3>
 
       <div class="card-tools">
+        <a href="{{ route('admin.pdf-penggalang') }}" class="btn btn-info">Export</a>
         <button type="button" class="btn btn-default" data-toggle="modal" id="createNewProduct">
             Tambah
           </button>

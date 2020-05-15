@@ -15,4 +15,14 @@ class Pengguna extends Authenticatable
     protected $fillable = [
         'username', 'hak_akses', 'password','status_aktif'
     ];
+
+    public function isAdmin()
+    {
+        return ($this->hak_akses == 1);
+    }
+
+    public function isPenggalang()
+    {
+        return ($this->hak_akses == 2);
+    }
 }

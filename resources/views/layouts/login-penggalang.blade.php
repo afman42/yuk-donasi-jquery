@@ -26,7 +26,7 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Silakan Masuk</p>
-      <form action="{{ route('admin.login') }}" method="post">
+      <form action="{{ route('penggalang.login') }}" method="post">
         {{ csrf_field() }}
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="username" placeholder="Masukan Username">

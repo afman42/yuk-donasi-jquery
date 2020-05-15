@@ -23,10 +23,13 @@
 
     @include('partial._nav')
     {{-- halaman Admin --}}
-    @include('partial._aside')
+    @if (auth()->user()->hak_akses == 1)
+      @include('partial._aside')        
+    @else
+      {{-- halaman penggalang dana --}}
+      @include('partial._aside_penggalang_dana')        
+    @endif
 
-    {{-- halaman penggalang dana --}}
-    {{-- @include('partial._aside_penggalang_dana') --}}
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">

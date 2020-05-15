@@ -1,30 +1,25 @@
 @extends('layouts.backend')
 
 @section('title')
-YKI | Donatur    
+YKI | Posting    
 @endsection
 
 
 @section('breadcumb-kiri')
-<h1 class="m-0 text-dark">Akun Donatur</h1>
+<h1 class="m-0 text-dark">Posting</h1>
 @endsection
 
 @section('breadcumb-kanan')
 <li class="breadcrumb-item"><a href="#">Admin</a></li>
-<li class="breadcrumb-item active">Akun Donatur</li>   
+<li class="breadcrumb-item active">Posting</li>   
 @endsection
 
 @section('content')
 <!-- Default box -->
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Akun Donatur</h3>
-
+      <h3 class="card-title">Posting Donasi</h3>
       <div class="card-tools">
-        <a href="{{ route('admin.pdf-donatur') }}" class="btn btn-info">Export</a>
-        <button type="button" class="btn btn-default" data-toggle="modal" id="createNewProduct">
-            Tambah
-        </button>
         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
           <i class="fas fa-minus"></i></button>
       </div>
@@ -35,6 +30,8 @@ YKI | Donatur
                 <tr>
                     <th>No</th>
                     <th>Username</th>
+                    <th>Judul</th>
+                    <th>Publish</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -42,20 +39,19 @@ YKI | Donatur
     </div>
 </div>
 <div class="modal fade" id="ajaxModel">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="modelHeading">Tambah Akun Penggalang Dana</h4>
+          <h4 class="modal-title" id="modelHeading">Nonaktif atau Aktifkan Posting</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
             <form id="productForm" name="productForm" method="POST">
-                <input type="hidden" name="id_username" id="id_username">
+                <input type="hidden" name="id_posting" id="id_posting">
                 <div class="form-group">
-                    <label for="no_rek" class="form-control-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username">
+                    <select name="publish" class="form-control" id="publish"></select>
                 </div>
         </div>
         <input type="hidden" name="action" id="action">
@@ -68,33 +64,13 @@ YKI | Donatur
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-  </div>
-
-  <div class="modal fade" id="ajaxHapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modelHeading">Hapus Akun Penggalang Dana</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body" id="yakinHapus">
-                <p>Yakin Mau Menghapus Ini !</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary" id="hapus_button">Hapus</button>
-            </div>
-        </div>
-    </div>
 </div>
+
 @endsection
 
 @section('script-datatable')
-<script>  
-    $('.akun-tree').addClass('menu-open');
-    $('#akun').addClass('active');
-    $('#donatur').addClass('active');
+<script>
+    $('#mel-posting').addClass('active');
 </script>
 <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
@@ -127,45 +103,12 @@ YKI | Donatur
             }
         });
 
-        $('#createNewProduct').click(function() {
-            $('#productForm')[0].reset();
-            $('#saveBtn').html('Tambah');
-            $('#action').val('Tambah');
-            $('#ajaxModel').modal('show');
-        });
 
         $('#productForm').on('submit', function(event) {
             event.preventDefault();
-            if ($('#action').val() == 'Tambah') {
-
-                $.ajax({
-                    url: "{{ route('admin.donatur-post') }}",
-                    method: 'POST',
-                    data: new FormData(this),
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    dataType: "json",
-                    success: function(data) {
-                        var toast = "";
-                        if (data.errors) {
-                            for (var count = 0; count < data.errors.length; count++) {
-                                toast = toastr.error("" + data.errors[count] + "");
-                            }
-                        }
-                        if (data.success) {
-                            $('#productForm')[0].reset();
-                            $('#table').DataTable().ajax.reload();
-                            toast = toastr.success(data.success);
-                            $('#ajaxModel').modal('hide');
-                        }
-                        toast;
-                    }
-                })
-            } //1
             if ($('#action').val() == 'Edit') {
                 $.ajax({
-                    url: "{{ url('admin/donatur/update') }}",
+                    url: "{{ url('admin/melihat-posting/update') }}",
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -193,44 +136,14 @@ YKI | Donatur
 
         $('body').on('click', '.editProduct', function() {
             var product_id = $(this).data('id');
-            $.get("{{ url('admin/donatur') }}" + '/' + product_id + '/edit', function(data) {
+            $.get("{{ url('admin/melihat-posting') }}" + '/' + product_id + '/edit', function(data) {
+                $('#publish').load("{{ route('admin.postingid') }}", function(datas) {
+                    $('select[name="publish"]').find('option[value="' + data.publish + '"]').attr("selected", true);
+                })
                 $('#saveBtn').html("Simpan");
                 $('#action').val("Edit");
                 $('#ajaxModel').modal('show');
-                $('#id_username').val(data.id);
-                $('#username').val(data.username);
-            })
-        });
-
-        var product_id;
-        $(document).on('click', '.delete', function() {
-            product_id = $(this).data("id");
-            $.get("{{ url('admin/getdonatur') }}" + '/' + product_id, function(data) {
-                $('#yakinHapus').text('Yakin Menghapus Username ' + data.username + ' ?')
-            })
-            $('#ajaxHapus').modal('show');
-        });
-
-        $('#hapus_button').click(function() {
-            $.ajax({
-                url: "/admin/donatur/destroy" + "/" + product_id,
-                method: "POST",
-                success: function(data) {
-                    var toast = "";
-                    setTimeout(function() {
-                        $('#hapus_button').text('Menghapus...');
-                        $('#ajaxHapus').modal('hide');
-                        $('#table').DataTable().ajax.reload();
-                    }, 500);
-
-                    if (data.error) {
-                        toast = toastr.error("Data tidak dapat dihapus");
-                    }
-
-                    if (data.success) {
-                        toast = toastr.success(data.success);
-                    }
-                }
+                $('#id_posting').val(data.id);
             })
         });
         
@@ -239,14 +152,22 @@ YKI | Donatur
             serverSide: true,
             responsive: true,
             autoWidth: false,
-            ajax: "{{ route('admin.donatur') }}",
+            ajax: "{{ route('admin.melihat-posting') }}",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
                 },
                 {
-                    data: 'username',
+                    data: 'user_id',
                     name: 'username'
+                },
+                {
+                    data: 'judul',
+                    name: 'judul'
+                },
+                {
+                    data: 'publish',
+                    name: 'publish'
                 },
                 {
                     data: 'action',

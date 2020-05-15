@@ -10,8 +10,7 @@ class BiodataDonaturController extends Controller
     
     public function index()
     {
-        return view('penggalang-dana.profil');
-        dd(session('model'));
+        return view('penggalang-dana.biodata');
     }
     
     public function store(Request $request)

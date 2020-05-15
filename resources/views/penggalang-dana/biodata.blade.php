@@ -1,24 +1,24 @@
 @extends('layouts.backend')
 
 @section('title')
-YKI | Pengaturan Akun
+YKI | Biodata
 @endsection
 
 
 @section('breadcumb-kiri')
-<h1 class="m-0 text-dark">Profil</h1>
+<h1 class="m-0 text-dark">Biodata</h1>
 @endsection
 
 @section('breadcumb-kanan')
 <li class="breadcrumb-item"><a href="#">Penggalang Dana</a></li>
-<li class="breadcrumb-item active">Profil</li>   
+<li class="breadcrumb-item active">Biodata</li>   
 @endsection
 
 @section('content')
 <!-- Default box -->
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Profil</h3>
+      <h3 class="card-title">Biodata</h3>
 
       <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -28,7 +28,7 @@ YKI | Pengaturan Akun
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <form action="{{ route('penggalang-dana.profil-post') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('penggalang-dana.biodata-post') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" value="1" name="user_id">
                     <div class="form-group">

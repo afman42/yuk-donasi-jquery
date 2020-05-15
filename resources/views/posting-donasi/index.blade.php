@@ -1,24 +1,24 @@
 @extends('layouts.backend')
 
 @section('title')
-YKI | Bank   
+YKI | Posting Donasi   
 @endsection
 
 
 @section('breadcumb-kiri')
-<h1 class="m-0 text-dark">Bank</h1>
+<h1 class="m-0 text-dark">Posting Donasi</h1>
 @endsection
 
 @section('breadcumb-kanan')
 <li class="breadcrumb-item"><a href="#">Penggalang Dana</a></li>
-<li class="breadcrumb-item active">Bank</li>   
+<li class="breadcrumb-item active">Posting Donasi</li>   
 @endsection
 
 @section('content')
 <!-- Default box -->
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Bank</h3>
+      <h3 class="card-title">Posting Donasi</h3>
 
       <div class="card-tools">
         <button type="button" class="btn btn-default" data-toggle="modal" id="createNewProduct">
@@ -36,7 +36,9 @@ YKI | Bank
                     <th>Judul</th>
                     <th>Deskripsi</th>
                     <th>Gambar</th>
-                    <th>Publish</th>
+                    <th>Bank</th>
+                    <th>TMS</th>
+                    <th>TAS</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -48,14 +50,14 @@ YKI | Bank
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="modelHeading">Tambah Bank</h4>
+          <h4 class="modal-title" id="modelHeading">Tambah Posting Donasi</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
             <form id="productForm" name="productForm" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="id_berita" id="id_berita">
+                <input type="hidden" name="id_posting_donasi" id="id_posting_donasi">
                 <div class="form-group">
                     <label for="judul" class="form-control-label">Judul</label>
                     <input type="text" class="form-control" id="judul" name="judul">
@@ -69,9 +71,17 @@ YKI | Bank
                     <input type="file" class="form-control" id="gambar" name="gambar">
                 </div>
                 <div class="form-group">
-                    <label for="publish" class="form-control-label">Publish</label>
-                    <select name="publish" id="publish" class="form-control">
+                    <label for="publish" class="form-control-label">Bank</label>
+                    <select name="bank_id" id="bank_id" class="form-control">
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="gambar" class="form-control-label">Tanggal Mulai Selesai</label>
+                    <input type="date" class="form-control" id="tanggal_mulai_selesai" name="tanggal_mulai_selesai">
+                </div>
+                <div class="form-group">
+                    <label for="gambar" class="form-control-label">Tanggal Akhir Selesai</label>
+                    <input type="date" class="form-control" id="tanggal_akhir_selesai" name="tanggal_akhir_selesai">
                 </div>
         </div>
         <input type="hidden" name="action" id="action">
@@ -90,7 +100,7 @@ YKI | Bank
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modelHeading">Hapus Bank</h5>
+                <h5 class="modal-title" id="modelHeading">Hapus Posting Donasi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 </button>
             </div>
@@ -109,7 +119,7 @@ YKI | Bank
 
 @section('script-datatable')
 <script>  
-    $('#berita').addClass('active');
+    $('#mel-posting').addClass('active');
 </script>
 <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
@@ -146,7 +156,7 @@ YKI | Bank
             $('#productForm')[0].reset();
             $('#saveBtn').html('Tambah');
             $('#action').val('Tambah');
-            $('#publish').load("{{ route('berita.beritaid') }}")
+            $('#bank_id').load("{{ route('posting.postingid') }}")
             $('#ajaxModel').modal('show');
         });
 
@@ -155,7 +165,7 @@ YKI | Bank
             if ($('#action').val() == 'Tambah') {
 
                 $.ajax({
-                    url: "{{ route('berita.store') }}",
+                    url: "{{ route('posting-donasi.store') }}",
                     method: 'POST',
                     data: new FormData(this),
                     contentType: false,
@@ -181,7 +191,7 @@ YKI | Bank
             } //1
             if ($('#action').val() == 'Edit') {
                 $.ajax({
-                    url: "{{ url('admin/berita/update') }}",
+                    url: "{{ url('penggalang-dana/posting-donasi/update') }}",
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -209,17 +219,20 @@ YKI | Bank
 
         $('body').on('click', '.editProduct', function() {
             var product_id = $(this).data('id');
-            $.get("{{ url('admin/berita') }}" + '/' + product_id + '/edit', function(data) {
-                $('#publish').load("{{ route('berita.beritaid') }}", function(datas) {
-                    $('select[name="publish"]').find('option[value="' + data.publish + '"]').attr("selected", true);
+            $.get("{{ url('penggalang-dana/posting-donasi') }}" + '/' + product_id + '/edit', function(data) {
+                $('#bank_id').load("{{ route('posting.postingid') }}", function(datas) {
+                    $('select[name="bank_id"]').find('option[value="' + data.bank_id + '"]').attr("selected", true);
                 })
                 $('#saveBtn').html("Simpan");
                 $('#action').val("Edit");
+                $('#modelHeading').text('Update Posting Donasi')
                 $('#ajaxModel').modal('show');
                 console.log(data);
-                $('#id_berita').val(data.id);
+                $('#id_posting_donasi').val(data.id);
                 $('#judul').val(data.judul);
                 $('#deskripsi').val(data.deskripsi);
+                $('#tanggal_mulai_selesai').val(data.tanggal_mulai_selesai);
+                $('#tanggal_akhir_selesai').val(data.tanggal_akhir_selesai);
                 // $('#gambar').val(data.gambar);
             })
         });
@@ -227,15 +240,15 @@ YKI | Bank
         var product_id;
         $(document).on('click', '.delete', function() {
             product_id = $(this).data("id");
-            $.get("{{ url('admin/getberita') }}" + '/' + product_id, function(data) {
-                $('#yakinHapus').text('Yakin Menghapus Atas Nama ' + data.judul + ' ?')
+            $.get("{{ url('penggalang-dana/getposting') }}" + '/' + product_id, function(data) {
+                $('#yakinHapus').text('Yakin Menghapus Posting Judul ' + data.judul + ' ?')
             })
             $('#ajaxHapus').modal('show');
         });
 
         $('#hapus_button').click(function() {
             $.ajax({
-                url: "/admin/berita/destroy" + "/" + product_id,
+                url: "/penggalang-dana/posting-donasi/destroy" + "/" + product_id,
                 method: "POST",
                 success: function(data) {
                     var toast = "";
@@ -262,7 +275,7 @@ YKI | Bank
             responsive: true,
             autoWidth: false,
             ajax: {
-                url : "{{ url('/admin/berita') }}",
+                url : "{{ route('posting-donasi.index') }}",
             },
             columns: [{
                     data: 'DT_RowIndex',
@@ -281,8 +294,16 @@ YKI | Bank
                     name: 'gambar'
                 },
                 {
-                    data: 'publish',
-                    name: 'publish'
+                    data: 'bank_id',
+                    name: 'bank_id'
+                },
+                {
+                    data: 'tanggal_mulai_selesai',
+                    name: 'tanggal_mulai_selesai'
+                },
+                {
+                    data: 'tanggal_akhir_selesai',
+                    name: 'tanggal_akhir_selesai'
                 },
                 {
                     data: 'action',
