@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Models\Pengguna;
-class CekLogin
+class CekLoginPenggalangDana
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,11 @@ class CekLogin
      */
     public function handle($request, Closure $next)
     {
-        // return $next($request);
-        if(auth()->check() && $request->user()->hak_akses == 1 && session('login')) {
+        if(auth()->check() && $request->user()->hak_akses == 2) {
             return $next($request);
+            // dd($request->user()->hak_akses ==2);
         }
 
-        return redirect()->route('admin.getlogin');
+        return redirect()->route('penggalang.getlogin');
     }
 }

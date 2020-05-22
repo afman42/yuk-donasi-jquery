@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PenggalangDanaController extends Controller
 {
@@ -26,7 +27,11 @@ class PenggalangDanaController extends Controller
     {
         $atribut = $request->only(['username','password']);
         if (Auth::attempt($atribut)) {
+            $request->session()->put('login', Auth::user()->username);
             return redirect()->route('penggalang-dana.beranda');
+        }
+        else{
+            return redirect()->route('penggalang.getlogin');
         }
     }
 

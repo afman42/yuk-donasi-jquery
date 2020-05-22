@@ -1,20 +1,17 @@
 <?php
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/posting-donasi/{id}','HomeController@posting')->name('home.posting');
+Route::get('/berita/{id}', 'HomeController@berita');
 
-// Auth::routes();
+Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/tes', function () {
     return view('admin.index');
 });
 
-Route::get('/login', function () {
-    return view('layouts.login');
-});
 
 Route::get('/admin/login','AdminController@show')->name('admin.getlogin');
 Route::post('/admin/login','AdminController@login')->name('admin.login');
@@ -68,27 +65,29 @@ Route::group(['middleware' => ['web', 'ceklogin']], function () {
     });
 });
 
-Route::prefix('penggalang-dana')->group(function () {
-    Route::get('/','PenggalangDanaController@beranda')->name('penggalang-dana.beranda');
-    Route::get('pengaturan-akun','PenggalangDanaController@pengaturan_akun')->name('penggalang-dana.pengaturan-akun');    
-    Route::post('logout','PenggalangDanaController@logout')->name('penggalang-dana.logout');
-   
-    //Biodata Routes
-    Route::get('biodata','BiodataDonaturController@index')->name('penggalang-dana.biodata');
-    Route::post('biodata','BiodataDonaturController@store')->name('penggalang-dana.biodata-post');
+Route::group(['middleware' => ['web', 'cekloginpenggalangdana']], function () {
+    Route::prefix('penggalang-dana')->group(function () {
+        Route::get('/','PenggalangDanaController@beranda')->name('penggalang-dana.beranda');
+        Route::get('pengaturan-akun','PenggalangDanaController@pengaturan_akun')->name('penggalang-dana.pengaturan-akun');    
+        Route::post('logout','PenggalangDanaController@logout')->name('penggalang-dana.logout');
     
-    //posting-donasi routes
-    Route::resource('posting-donasi','PostingDonasiController')->only(['index','store']);
-    Route::get('posting-donasi/{id}/edit','PostingDonasiController@show');
-    Route::post('posting-donasi/update','PostingDonasiController@update');
-    Route::post('posting-donasi/destroy/{id}','PostingDonasiController@destroy');
-    Route::get('postingdonasiid','PostingDonasiController@postingid')->name('posting.postingid');
-    Route::get('getposting/{id}','PostingDonasiController@getposting');
+        //Biodata Routes
+        Route::get('biodata','BiodataDonaturController@index')->name('penggalang-dana.biodata');
+        Route::post('biodata','BiodataDonaturController@store')->name('penggalang-dana.biodata-post');
+        
+        //posting-donasi routes
+        Route::resource('posting-donasi','PostingDonasiController')->only(['index','store']);
+        Route::get('posting-donasi/{id}/edit','PostingDonasiController@show');
+        Route::post('posting-donasi/update','PostingDonasiController@update');
+        Route::post('posting-donasi/destroy/{id}','PostingDonasiController@destroy');
+        Route::get('postingdonasiid','PostingDonasiController@postingid')->name('posting.postingid');
+        Route::get('getposting/{id}','PostingDonasiController@getposting');
 
-    //Bank Routes
-    Route::resource('bank','BankController')->only(['index','store']);
-    Route::get('bank/{id}/edit','BankController@show');
-    Route::post('bank/update','BankController@update');
-    Route::post('bank/destroy/{id}','BankController@destroy');
-    Route::get('getbank/{id}','BankController@getbank');
+        //Bank Routes
+        Route::resource('bank','BankController')->only(['index','store']);
+        Route::get('bank/{id}/edit','BankController@show');
+        Route::post('bank/update','BankController@update');
+        Route::post('bank/destroy/{id}','BankController@destroy');
+        Route::get('getbank/{id}','BankController@getbank');
+    });
 });
