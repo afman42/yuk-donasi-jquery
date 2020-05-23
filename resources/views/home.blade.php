@@ -2,7 +2,13 @@
     use Illuminate\Support\Str;
 @endphp
 @extends('layouts.frontend')
-    @section('content')
+@section('content')
+    @if ($message = Session::get('status'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>	
+            <strong>{{ $message }}</strong> di Halaman <a href="http://localhost:8000/penggalang-dana/login">Ini</a>
+    </div>
+    @endif
     <div class="container">
       <div class="row">
         <div class="col-md-12 mt-4">

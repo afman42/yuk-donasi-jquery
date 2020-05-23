@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $user = new Pengguna();
+        $user->name = 'admin';
+        $user->email = 'admin@example.com';
         $user->username = "admin";
         $user->password = Hash::make('admin123');
         $user->hak_akses = 1;

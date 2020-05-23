@@ -39,6 +39,7 @@ YKI | Posting Donasi
                     <th>Bank</th>
                     <th>TMS</th>
                     <th>TAS</th>
+                    <th>Jumlah Donasi</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -69,6 +70,10 @@ YKI | Posting Donasi
                 <div class="form-group">
                     <label for="gambar" class="form-control-label">Gambar</label>
                     <input type="file" class="form-control" id="gambar" name="gambar">
+                </div>
+                <div class="form-group">
+                    <label for="jumlah_donasi" class="form-control-label">Jumlah Donasi</label>
+                    <input type="number" class="form-control" id="jumlah_donasi" name="jumlah_donasi">
                 </div>
                 <div class="form-group">
                     <label for="publish" class="form-control-label">Bank</label>
@@ -233,7 +238,7 @@ YKI | Posting Donasi
                 $('#deskripsi').val(data.deskripsi);
                 $('#tanggal_mulai_selesai').val(data.tanggal_mulai_selesai);
                 $('#tanggal_akhir_selesai').val(data.tanggal_akhir_selesai);
-                // $('#gambar').val(data.gambar);
+                $('#jumlah_donasi').val(data.jumlah_donasi);
             })
         });
 
@@ -304,6 +309,10 @@ YKI | Posting Donasi
                 {
                     data: 'tanggal_akhir_selesai',
                     name: 'tanggal_akhir_selesai'
+                },
+                {
+                    data: 'jumlah_donasi',
+                    name: 'jumlah_donasi'
                 },
                 {
                     data: 'action',

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\Pengguna;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -49,9 +49,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'username' => ['required', 'string', 'max:255','unique:user,username'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'hak_akses' => ['required'],
+            'password' => ['required', 'string', 'confirmed'],
         ]);
     }
 
@@ -59,13 +60,16 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\Pengguna
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        return Pengguna::create([
+            'name' => $data['username'],
+            'username' => $data['username'],
             'email' => $data['email'],
+            'hak_akses' => $data['hak_akses'],
+            'status_aktif' => 2,
             'password' => Hash::make($data['password']),
         ]);
     }

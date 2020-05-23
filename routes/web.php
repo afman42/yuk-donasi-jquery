@@ -3,15 +3,10 @@
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/posting-donasi/{id}','HomeController@posting')->name('home.posting');
 Route::get('/berita/{id}', 'HomeController@berita');
-
+Route::post('/donasi-masuk','MasukanDonasiController@masukan_donasi');
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/tes', function () {
-    return view('admin.index');
-});
-
 
 Route::get('/admin/login','AdminController@show')->name('admin.getlogin');
 Route::post('/admin/login','AdminController@login')->name('admin.login');

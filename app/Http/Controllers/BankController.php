@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Bank;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class BankController extends Controller
 {
@@ -51,7 +52,7 @@ class BankController extends Controller
             'no_rekening' => $request->no_rek,
             'nama_bank' => $request->nama_bank,
             'atas_nama' => $request->atas_nama,
-            'user_id' => 1
+            'user_id' => Auth::user()->id
         ]);
 
         return response()->json(['success' => 'Data Bank Berhasil Ditambah.']);
@@ -86,7 +87,7 @@ class BankController extends Controller
             'no_rekening' => $request->no_rek,
             'nama_bank' => $request->nama_bank,
             'atas_nama' => $request->atas_nama,
-            'user_id' => 1
+            'user_id' => Auth::user()->id
         );
 
         Bank::whereId($request->id_bank)->update($form_data);

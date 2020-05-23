@@ -6,14 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravelista\Comments\Commenter;
 
 class Pengguna extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Commenter;
 
     protected $table = 'user';
     protected $fillable = [
-        'username', 'hak_akses', 'password','status_aktif'
+        'username','name','email', 'hak_akses', 'password','status_aktif'
     ];
 
     public function isAdmin()

@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravelista\Comments\Commentable;
 
 class PostingDonasi extends Model
 {
+    use Commentable;
     protected $table = 'posting_donasi';
     protected $fillable = ['judul','deskripsi','gambar','jumlah_donasi','user_id','tanggal_mulai_selesai','tanggal_akhir_selesai','bank_id','masukan_donasi_id','publish'];
     
@@ -17,5 +19,10 @@ class PostingDonasi extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\Pengguna','user_id','id');
+    }
+
+    public function masukan_donasi()
+    {
+        return $this->hasMany('App\Models\MasukanDonasi','posting_id','id');
     }
 }

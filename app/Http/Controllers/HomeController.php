@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Berita;
 use App\Models\PostingDonasi;
+use Validator;
+
 class HomeController extends Controller
 {
     /**
@@ -41,7 +43,8 @@ class HomeController extends Controller
     
     public function posting($id)
     {
-        $posting = PostingDonasi::find($id);
+        $posting = PostingDonasi::with('masukan_donasi')->find($id);
         return view('frontend.posting',['posting' => $posting]);
     }
+
 }
