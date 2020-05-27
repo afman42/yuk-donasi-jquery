@@ -26,4 +26,9 @@ class Pengguna extends Authenticatable
     {
         return ($this->hak_akses == 2);
     }
+
+    public function biodata_donatur()
+    {
+        return $this->belongsTo('App\Models\BiodataDonatur','user_id','id');
+    }
 }

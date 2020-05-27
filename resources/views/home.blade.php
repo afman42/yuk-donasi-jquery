@@ -39,7 +39,7 @@
             <div class="col-md-4"></div>
             <div class="mt-5"></div>
             @forelse ($posting as $item)
-            <div class="col-md-3">
+            <div class="col-md-3 mt-2">
                 <div class="card">
                     <img src="{{ url($item->gambar) }}" class="card-img-top" height="200" alt="...">
                     <div class="card-body">
@@ -52,7 +52,7 @@
             @empty
                 <p>Maaf Kosong</p>
             @endforelse
-            <div class="col-md-12 mt-3" style="padding-bottom: 50px;">
+            <div class="col-md-12 mt-3" style="padding-bottom: 150px;">
               {{ $posting->appends(['q' => request()->only('q')])->render() }}
             </div>
         </div>

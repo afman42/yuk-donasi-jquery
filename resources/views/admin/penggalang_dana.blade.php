@@ -21,9 +21,9 @@ YKI | Penggalang Dana
 
       <div class="card-tools">
         <a href="{{ route('admin.pdf-penggalang') }}" class="btn btn-info">Export</a>
-        <button type="button" class="btn btn-default" data-toggle="modal" id="createNewProduct">
+        {{-- <button type="button" class="btn btn-default" data-toggle="modal" id="createNewProduct">
             Tambah
-          </button>
+          </button> --}}
         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
           <i class="fas fa-minus"></i></button>
       </div>

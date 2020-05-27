@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Berita;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class BeritaController extends Controller
 {
@@ -57,7 +58,7 @@ class BeritaController extends Controller
         $model->judul = $request->judul;
         $model->deskripsi = $request->deskripsi;
         $model->publish = $request->publish;
-        $model->user_id = 1;
+        $model->user_id = Auth::user()->id;
         $model->gambar = $newName;
         if ($model->save()) {
             return response()->json(['success' => 'Data Berita Berhasil Ditambah.']);
@@ -94,7 +95,7 @@ class BeritaController extends Controller
         $model->judul = $request->judul;
         $model->deskripsi = $request->deskripsi;
         $model->publish = $request->publish;
-        $model->user_id = 1;
+        $model->user_id = Auth::user()->id;
 
         $foto = $request->file('gambar');
         if (!empty($foto)){

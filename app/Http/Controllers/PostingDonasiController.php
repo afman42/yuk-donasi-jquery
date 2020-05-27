@@ -62,7 +62,7 @@ class PostingDonasiController extends Controller
         $model->deskripsi = $request->deskripsi;
         $model->bank_id = $request->bank_id;
         $model->jumlah_donasi = $request->jumlah_donasi;
-        $model->publish = 0;
+        $model->publish = 1;
         $model->tanggal_mulai_selesai = $request->tanggal_mulai_selesai;
         $model->tanggal_akhir_selesai = $request->tanggal_akhir_selesai;
         $model->user_id = Auth::user()->id;

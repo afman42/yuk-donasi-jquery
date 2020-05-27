@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BiodataDonatur;
+use Illuminate\Support\Facades\Auth;
 
 class BiodataDonaturController extends Controller
 {
@@ -21,7 +22,7 @@ class BiodataDonaturController extends Controller
         $foto->move('image/photo',$newName);
         
         $newUser = BiodataDonatur::updateOrCreate([
-            'user_id'   => 1,
+            'user_id'   => Auth::user()->id,
         ],[
             'jenis_kelamin' => $request->get('jenis_kelamin'),
             'alamat' => $request->get('alamat'),
@@ -29,8 +30,8 @@ class BiodataDonaturController extends Controller
             'gambar'   => $newName,
         ]);
         
-        $model = BiodataDonatur::where('user_id',1)->first();
+        $model = BiodataDonatur::where('user_id',Auth::user()->id)->first();
         $request->session()->put('model', $model);
-        return redirect(route('penggalang-dana.profil'));
+        return redirect(route('penggalang-dana.biodata'));
     }
 }

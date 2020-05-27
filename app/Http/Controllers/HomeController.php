@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Berita;
 use App\Models\PostingDonasi;
+use App\Models\BiodataDonatur;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -30,21 +32,24 @@ class HomeController extends Controller
         $posting = PostingDonasi::when($request->q, function ($query) use ($request) {
             $query->where('judul', 'LIKE', "%{$request->q}%")
                   ->orWhere('deskripsi', 'LIKE', "%{$request->q}%");
-            })->paginate(4);
+            })->where('tanggal_mulai_selesai','<=',now())
+              ->where('tanggal_akhir_selesai','>=',now())
+              ->paginate(4);
         return view('home',['posting' => $posting, 'berita' => $berita]);
     }
 
     public function berita($id)
     {
-        $berita = Berita::find($id);
-        // dd($berita);
+        $berita = Berita::findOrFail($id);
+        // dd(now());
         return view('frontend.berita',['berita' => $berita]);
     }
     
     public function posting($id)
     {
-        $posting = PostingDonasi::with('masukan_donasi')->find($id);
-        return view('frontend.posting',['posting' => $posting]);
+        $posting = PostingDonasi::with(['masukan_donasi','bank'])
+                    ->findOrFail($id);
+        $user = BiodataDonatur::with('user')->first();
+        return view('frontend.posting',['posting' => $posting,'user' => $user]);
     }
-
 }

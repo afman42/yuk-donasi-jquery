@@ -305,12 +305,33 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
+
+        $rules = array(
+            'username' => 'required',
+            'password' => 'required',
+        );
+
+        $messages = [
+            'required' => ':attribute harus diisi.'
+        ];
+
+        $error = Validator::make($request->all(), $rules,$messages);
+
+        if ($error->fails()) {
+            // return redirect(route('penggalang-dana.beranda'))
+            //             ->withErrors($error)
+            //             ->withInput();
+            return response()->json(['errors' => $error->errors()->all()]);
+
+        }
+
         $atribut = $request->only(['username','password']);
+        
         if (Auth::attempt($atribut)) {
             $request->session()->put('login', Auth::user()->username);
-            return redirect()->route('admin.index');
-        }else{
-            return redirect()->route('admin.getlogin');
+
+            return response()->json(['success' => 'Berhasil Login.']);
+            // return redirect()->route('admin.index');
         }
     }
 

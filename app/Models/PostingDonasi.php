@@ -18,7 +18,7 @@ class PostingDonasi extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\Pengguna','user_id','id');
+        return $this->hasOne('App\Models\Pengguna','id','user_id');
     }
 
     public function masukan_donasi()

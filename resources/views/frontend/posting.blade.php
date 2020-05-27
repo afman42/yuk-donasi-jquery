@@ -7,6 +7,18 @@
             <div class="col-md-8">
                 <h5>{{ $posting->judul }}</h5>
                 <img src="{{ url($posting->gambar) }}" alt="" class="w-100" height="300">
+                @if ($posting->user_id == $user->user_id)
+                <ul class="list-unstyled mt-2">
+                    <li class="media">
+                      <img src="{{ url($user->gambar) }}" class="mr-3" alt="..." width="64" height="64">
+                      <div class="media-body">
+                        <h5 class="mt-0 mb-1">{{ $user->user->name }}</h5>
+                        {{ $user->no_hp }} - {{ $user->alamat }} <br>
+                        Bank : {{ $posting->bank->nama_bank }}, Atas Nama: {{ $posting->bank->atas_nama }}, No Rekening: {{ $posting->bank->no_rekening }}
+                      </div>
+                    </li>
+                  </ul>
+                @endif
                 <p>{{ $posting->deskripsi }}</p>
                 <div class="mt-2">
                     @comments(['model' => $posting,'perPage' => 2])
@@ -15,7 +27,7 @@
             @php
                 $count = 0;
             @endphp
-            <div class="col-md-4 mt-4">
+            <div class="col-md-4 mt-4" style="padding-bottom: 150px;">
                 Jumlah Donasi Yang Diperlukan: <span id="jumlah">
                 @foreach ($posting->masukan_donasi as $item)
                     @php
@@ -24,8 +36,10 @@
                 @endforeach
                 {{ $count }}
                 </span>  / {{ $posting->jumlah_donasi }}
-                @if (auth()->user()->hak_akses == 3)
-                   <button type="button" class="btn btn-outline-primary" id="createNewProduct">Donasi</button>
+                @if (auth()->check())
+                    @if (auth()->user()->hak_akses == 3)
+                        <button type="button" class="btn btn-outline-primary" id="createNewProduct">Donasi</button>
+                    @endif
                 @endif
             </div>
         </div>
@@ -118,6 +132,7 @@
                         if (data.success) {
                             $('.masukan_donasi')[0].reset();
                             toast = toastr.success(data.success);
+                            location.reload();
                             $('#feedback-modal').modal('hide');
                         }
                         toast;
