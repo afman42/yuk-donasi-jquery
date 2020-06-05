@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Berita;
 use Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class BeritaController extends Controller
 {
@@ -14,6 +15,12 @@ class BeritaController extends Controller
         if (Request()->ajax()) {
             $model = Berita::all();
             return datatables()->of($model)
+                ->editColumn('judul', function(Berita $berita){
+                    return Str::limit($berita->judul,10,'...');
+                })
+                ->editColumn('deskripsi', function(Berita $berita){
+                    return Str::limit($berita->deskripsi,10,'...');
+                })
                 ->editColumn('gambar', function (Berita $berita) {
                     return '<img src="'.url($berita->gambar).'" width="100" height="100">';
                 })
@@ -35,14 +42,16 @@ class BeritaController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'judul' => 'required',
+            'judul' => 'required|max:50',
             'deskripsi' => 'required',
-            'gambar' => 'required',
+            'gambar' => 'required|mimes:jpeg,jpg,png',
             'publish' => 'required',
         );
 
         $messages = [
-            'required' => ':attribute harus diisi.'
+            'required' => ':attribute harus diisi.',
+            'judul.max' => 'Maksimal Judul 50 huruf',
+            'gambar.mimes' => 'Gambar berektensi jpeg,jpg,png'
         ];
 
         $error = Validator::make($request->all(), $rules,$messages);
@@ -74,15 +83,17 @@ class BeritaController extends Controller
     public function update(Request $request)
     {
         $rules = array(
-            'judul' => 'required|unique:berita,judul',
+            'judul' => 'required|unique:berita,judul|max:50',
             'deskripsi' => 'required',
-            'gambar' => 'required',
+            'gambar' => 'mimes:jpeg,jpg,png',
             'publish' => 'required',
         );
 
         $messages = [
             'required' => ':attribute harus diisi.',
-            'unique' => ':attribute harus unik'
+            'unique' => ':attribute harus unik',
+            'judul.max' => 'Maksimal Judul 50 huruf',
+            'gambar.mimes' => 'Gambar berektensi jpeg,jpg,png'
         ];
 
         $error = Validator::make($request->all(), $rules,$messages);
@@ -123,7 +134,7 @@ class BeritaController extends Controller
             0 => 'Unpublish'
         ];
         if ($berita) {
-            echo "<option value=''>-- Pilih Berita ---</option>";
+            echo "<option value=''>-- Pilih Publish ---</option>";
             foreach ($berita as $key => $value) {
                 echo "<option value=" . $key . ">" . $value . "</option>";
             }
@@ -134,7 +145,10 @@ class BeritaController extends Controller
     public function destroy($id)
     {
         Berita::find($id)->delete();
-
+        if ($id) {
+            $model = Berita::find($id)->first();
+            unlink($model->gambar);
+        }
         return response()->json(['success' => 'Data Bank Sukses Terhapus']);
     }
 }

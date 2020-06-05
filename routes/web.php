@@ -84,5 +84,8 @@ Route::group(['middleware' => ['web', 'cekloginpenggalangdana']], function () {
         Route::post('bank/update','BankController@update');
         Route::post('bank/destroy/{id}','BankController@destroy');
         Route::get('getbank/{id}','BankController@getbank');
+
+        //Pdf Routes
+        Route::get('pdf-posting/{id}','PostingDonasiController@pdf_posting');
     });
 });

@@ -18,6 +18,7 @@ class AdminController extends Controller
 
     public function penggalang_dana()
     {
+        $pdf_model = Pengguna::where('hak_akses',2)->count();
         if (Request()->ajax()) {
             $model = Pengguna::where('hak_akses',2)->get();
             return datatables()->of($model)
@@ -30,7 +31,7 @@ class AdminController extends Controller
                     return $button;
                 })->rawColumns(['action'])->addIndexColumn()->make(true);
         }
-        return view('admin.penggalang_dana');
+        return view('admin.penggalang_dana',['pdf_model' => $pdf_model]);
     }
 
     public function store_penggalang_dana(Request $request)
@@ -106,6 +107,7 @@ class AdminController extends Controller
     
     public function donatur()
     {
+        $pdf_model = Pengguna::where('hak_akses',3)->count();
         if (Request()->ajax()) {
             $model = Pengguna::where('hak_akses',3)->get();
             return datatables()->of($model)
@@ -118,7 +120,7 @@ class AdminController extends Controller
                     return $button;
                 })->rawColumns(['action'])->addIndexColumn()->make(true);
         }
-        return view('admin.donatur');
+        return view('admin.donatur', ['pdf_model' => $pdf_model]);
     }
 
     public function store_donatur(Request $request)
@@ -265,7 +267,7 @@ class AdminController extends Controller
 
         PostingDonasi::whereId($request->id_posting)->update($form_data);
 
-        return response()->json(['success' => 'Data Posting Donasi Telah Diperbaharui']);
+        return response()->json(['success' => 'Data Telah Diperbaharui']);
     }
     public function show_melihat_posting($id)
     {

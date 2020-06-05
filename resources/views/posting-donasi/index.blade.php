@@ -165,6 +165,13 @@ YKI | Posting Donasi
             $('#ajaxModel').modal('show');
         });
 
+        $('body').on('click', '.pdf-download', function() {
+            console.log('oke')
+            var product_id = $(this).data('id');
+            $.get("{{ url('/penggalang-dana/pdf-posting') }}" + "/" + product_id, function(data, status){
+                toastr.success('Berhasil Terdownload');
+            });
+        });   
         $('#productForm').on('submit', function(event) {
             event.preventDefault();
             if ($('#action').val() == 'Tambah') {

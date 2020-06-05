@@ -28,13 +28,14 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $berita = Berita::where('publish',1)->paginate(4);
+        $berita = Berita::where('publish',1)->paginate(4,['*'],'halaman_berita');
         $posting = PostingDonasi::when($request->q, function ($query) use ($request) {
             $query->where('judul', 'LIKE', "%{$request->q}%")
                   ->orWhere('deskripsi', 'LIKE', "%{$request->q}%");
             })->where('tanggal_mulai_selesai','<=',now())
               ->where('tanggal_akhir_selesai','>=',now())
-              ->paginate(4);
+              ->where('publish',1)
+              ->paginate(4,['*'],'halaman_donasi');
         return view('home',['posting' => $posting, 'berita' => $berita]);
     }
 

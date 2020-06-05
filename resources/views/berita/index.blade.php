@@ -1,24 +1,24 @@
 @extends('layouts.backend')
 
 @section('title')
-YKI | Bank   
+YKI | Berita   
 @endsection
 
 
 @section('breadcumb-kiri')
-<h1 class="m-0 text-dark">Bank</h1>
+<h1 class="m-0 text-dark">Berita</h1>
 @endsection
 
 @section('breadcumb-kanan')
-<li class="breadcrumb-item"><a href="#">Penggalang Dana</a></li>
-<li class="breadcrumb-item active">Bank</li>   
+<li class="breadcrumb-item"><a href="#">Admin</a></li>
+<li class="breadcrumb-item active">Berita</li>   
 @endsection
 
 @section('content')
 <!-- Default box -->
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Bank</h3>
+      <h3 class="card-title">Berita</h3>
 
       <div class="card-tools">
         <button type="button" class="btn btn-default" data-toggle="modal" id="createNewProduct">
@@ -76,7 +76,7 @@ YKI | Bank
         </div>
         <input type="hidden" name="action" id="action">
         <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
           <button type="submit" class="btn btn-primary" id="saveBtn">Save changes</button>
         </div>
         </form>
@@ -216,6 +216,7 @@ YKI | Bank
                 $('#saveBtn').html("Simpan");
                 $('#action').val("Edit");
                 $('#ajaxModel').modal('show');
+                $('#modelHeading').text('Update Berita')
                 console.log(data);
                 $('#id_berita').val(data.id);
                 $('#judul').val(data.judul);

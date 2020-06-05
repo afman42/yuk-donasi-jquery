@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
 @section('title')
-YKI | Posting    
+YKI | Melihat Posting    
 @endsection
 
 
@@ -56,7 +56,7 @@ YKI | Posting
         </div>
         <input type="hidden" name="action" id="action">
         <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
           <button type="submit" class="btn btn-primary" id="saveBtn">Save changes</button>
         </div>
         </form>

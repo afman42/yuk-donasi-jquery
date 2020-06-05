@@ -7,13 +7,22 @@ use App\Models\PostingDonasi;
 use App\Models\Bank;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Support\Str;
+
 class PostingDonasiController extends Controller
 {
     public function index()
     {
+        
         if (Request()->ajax()) {
-            $model = PostingDonasi::with(['bank'])->where('user_id',Auth::user()->id)->get();
+            $model = PostingDonasi::withCount(['masukan_donasi'])->with(['bank'])->where('user_id',Auth::user()->id)->get();
             return datatables()->of($model)
+                ->editColumn('judul', function(PostingDonasi $posting){
+                    return Str::limit($posting->judul,10,'...');
+                })
+                ->editColumn('deskripsi', function(PostingDonasi $posting){
+                    return Str::limit($posting->deskripsi,10,'...');
+                })
                 ->editColumn('gambar', function (PostingDonasi $posting) {
                     return '<img src="'.url($posting->gambar).'" width="100" height="100">';
                 })
@@ -26,18 +35,37 @@ class PostingDonasiController extends Controller
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<a href="javascript:void(0)" data-id="' . $data->id . '"
                 class="btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></a>';
+                    if ($data->masukan_donasi_count > 0) {
+                        $button .= '&nbsp;&nbsp;';
+                        $button .= '<a href="javascript:void(0)" data-id="' . $data->id . '" 
+                        class="btn btn-info btn-sm pdf-download"><i class="fas fa-file-pdf"></i></a>';
+                    }
                     return $button;
                 })->rawColumns(['gambar','action'])->addIndexColumn()->make(true);
         }
         return view('posting-donasi.index');
     }
 
+    public function pdf_posting($id)
+    {
+        // $data = PostingDonasi::with(['bank','masukan_donasi','user'])->where('user_id',Auth::user()->id)->get();
+        $data = \DB::table('masukan_donasi')
+                ->select('*')
+                ->join('posting_donasi', 'posting_donasi.id', '=', 'masukan_donasi.posting_id')
+                ->join('user', 'user.id', '=', 'masukan_donasi.user_id')
+                ->where('masukan_donasi.posting_id', $id)
+                ->get();
+        $pdf = \PDF::loadView('posting-donasi.pdf-posting', ['data' => $data]);
+        // $pdf->save(storage_path().'_filename.pdf');
+        return $pdf->download('dana-posting-donasi.pdf');
+    }
+
     public function store(Request $request)
     {
         $rules = array(
-            'judul' => 'required',
+            'judul' => 'required|max:50',
             'deskripsi' => 'required',
-            'gambar' => 'required',
+            'gambar' => 'required|mimes:jpeg,jpg,png',
             'jumlah_donasi' => 'required',
             'tanggal_mulai_selesai' => 'required',
             'tanggal_akhir_selesai' => 'required',
@@ -45,7 +73,9 @@ class PostingDonasiController extends Controller
         );
 
         $messages = [
-            'required' => ':attribute harus diisi.'
+            'required' => ':attribute harus diisi.',
+            'judul.max' => 'Maksimal Judul 50 huruf',
+            'gambar.mimes' => 'Gambar berektensi jpeg,jpg,png'
         ];
 
         $error = Validator::make($request->all(), $rules,$messages);
@@ -81,17 +111,20 @@ class PostingDonasiController extends Controller
     public function update(Request $request)
     {
         $rules = array(
-            'judul' => 'required',
+            'judul' => 'required|max:50',
             'deskripsi' => 'required',
             'jumlah_donasi' => 'required',
             'tanggal_mulai_selesai' => 'required',
             'tanggal_akhir_selesai' => 'required',
             'bank_id' => 'required',
+            'gambar' => 'mimes:jpeg,jpg,png',
         );
 
         $messages = [
             'required' => ':attribute harus diisi.',
-            'unique' => ':attribute harus unik'
+            'unique' => ':attribute harus unik',
+            'judul.max' => 'Maksimal Judul 50 huruf',
+            'gambar.mimes' => 'Gambar berektensi jpeg,jpg,png'
         ];
 
         $error = Validator::make($request->all(), $rules,$messages);
