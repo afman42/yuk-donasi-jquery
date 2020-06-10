@@ -40,6 +40,8 @@
                     @if (auth()->user()->hak_akses == 3)
                         <button type="button" class="btn btn-outline-primary" id="createNewProduct">Donasi</button>
                     @endif
+                @else
+                    Silakan Login Terlebih dahulu untuk donasi
                 @endif
             </div>
         </div>

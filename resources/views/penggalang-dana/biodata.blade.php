@@ -30,25 +30,28 @@ YKI | Biodata
             <div class="col-md-6">
                 <form action="{{ route('penggalang-dana.biodata-post') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" value="1" name="user_id">
                     <div class="form-group">
-                        <select name="jenis_kelamin" id="jk" class="form-control">
+                        <select name="jenis_kelamin" id="jk" class="form-control @error('jenis_kelamin') is-invalid @enderror"">
                             <option value="">-- Pilih Jenis Kelamin --</option>
                             <option value="1">Laki - Laki</option>
                             <option value="0">Perempuan</option>
                         </select>
+                        @error('jenis_kelamin')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">
-                        <input type="text" name="no_hp" id="no_hp" class="form-control" placeholder="Masukan No Hp">
+                        <input type="text" name="no_hp" id="no_hp" class="form-control @error('no_hp') is-invalid @enderror" placeholder="Masukan No Hp">
+                        @error('no_hp')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">
-                        <textarea name="alamat" id="alamat" rows="3" class="form-control"></textarea>
+                        <textarea name="alamat" id="alamat" rows="3" class="form-control @error('alamat') is-invalid @enderror"></textarea>
+                        @error('alamat')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">
-                        <input type="file" name="gambar" id="gambar" class="form-control">
+                        <input type="file" name="gambar" id="gambar" class="form-control @error('gambar') is-invalid @enderror">
+                        @error('gambar')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">
-                        <input type="submit" name="Ganti Profil" class="btn btn-primary">
+                        <input type="submit" value="Ganti Profil" class="btn btn-primary">
                     </div>
                 </form>
             </div>

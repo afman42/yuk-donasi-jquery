@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BiodataDonatur;
 use Illuminate\Support\Facades\Auth;
-
+use Validator;
 class BiodataDonaturController extends Controller
 {
     
@@ -16,11 +16,33 @@ class BiodataDonaturController extends Controller
     
     public function store(Request $request)
     {
-        $foto = $request->file('gambar');
-        $ext = $foto->getClientOriginalExtension();
-        $newName = "image/photo/photo-".rand(10,100).".".$ext;
-        $foto->move('image/photo',$newName);
         
+        $rules = array(
+            'jenis_kelamin' => 'required',
+            'alamat' => 'required',
+            'no_hp' => 'required',
+            'gambar' => 'required|mimes:jpeg,jpg,png',
+        );
+
+        $messages = [
+            'required' => ':attribute harus diisi.',
+            'gambar.mimes' => 'Gambar berektensi jpeg,jpg,png'
+        ];
+
+        $error = Validator::make($request->all(), $rules,$messages);
+
+        if ($error->fails()) {
+            return redirect(route('penggalang-dana.biodata'))
+            ->withErrors($error)
+            ->withInput();
+        }
+        
+        if($request->file('gambar')){
+            $foto = $request->file('gambar');
+            $ext = $foto->getClientOriginalExtension();
+            $newName = "image/photo/photo-".rand(10,100).".".$ext;
+            $foto->move('image/photo',$newName);
+        }
         $newUser = BiodataDonatur::updateOrCreate([
             'user_id'   => Auth::user()->id,
         ],[

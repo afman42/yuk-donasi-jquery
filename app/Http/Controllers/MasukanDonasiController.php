@@ -12,12 +12,13 @@ class MasukanDonasiController extends Controller
     public function masukan_donasi(Request $request)
     {
         $rules = array(
-            'photo_struk' => 'required',
+            'photo_struk' => 'required|mimes:jpeg,jpg,png',
             'donasi_masuk' => 'required',
         );
 
         $messages = [
             'required' => ':attribute harus diisi.',
+            'photo_struk.mimes' => 'Gambar berektensi jpeg,jpg,png'
         ];
 
         $error = Validator::make($request->all(), $rules,$messages);
