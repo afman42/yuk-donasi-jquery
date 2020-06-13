@@ -48,12 +48,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = [
+            'required' => ':attribute harus diisi.',
+            'string' => ':attribute harus kalimat',
+            'confirmed' => ':attribute harus sama',
+            'unique' => ':attribute harus unik',
+            'email' => ':attribute harus valid',
+        ];
         return Validator::make($data, [
             'username' => ['required', 'string', 'max:255','unique:user,username'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'hak_akses' => ['required'],
             'password' => ['required', 'string', 'confirmed'],
-        ]);
+        ],$messages);
     }
 
     /**

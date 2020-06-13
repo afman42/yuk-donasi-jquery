@@ -19,7 +19,7 @@
             {{-- Guest commenting --}}
             @if(isset($guest_commenting) and $guest_commenting == true)
                 <div class="form-group">
-                    <label for="message">Enter your name here:</label>
+                    <label for="message">Silakan Isi Nama:</label>
                     <input type="text" class="form-control @if($errors->has('guest_name')) is-invalid @endif" name="guest_name" />
                     @error('guest_name')
                         <div class="invalid-feedback">
@@ -28,7 +28,7 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="message">Enter your email here:</label>
+                    <label for="message">Silakan Isi Email:</label>
                     <input type="email" class="form-control @if($errors->has('guest_email')) is-invalid @endif" name="guest_email" />
                     @error('guest_email')
                         <div class="invalid-feedback">
@@ -39,14 +39,14 @@
             @endif
 
             <div class="form-group">
-                <label for="message">Enter your message here:</label>
+                <label for="message">Silakan Isi Pesan:</label>
                 <textarea class="form-control @if($errors->has('message')) is-invalid @endif" name="message" rows="3"></textarea>
                 <div class="invalid-feedback">
-                    Your message is required.
+                    Harap Pesan diisi.
                 </div>
-                <small class="form-text text-muted"><a target="_blank" href="https://help.github.com/articles/basic-writing-and-formatting-syntax">Markdown</a> cheatsheet.</small>
+                {{-- <small class="form-text text-muted"><a target="_blank" href="https://help.github.com/articles/basic-writing-and-formatting-syntax">Markdown</a> cheatsheet.</small> --}}
             </div>
-            <button type="submit" class="btn btn-sm btn-outline-success text-uppercase">Submit</button>
+            <button type="submit" class="btn btn-sm btn-outline-success text-uppercase">Kirim</button>
         </form>
     </div>
 </div>
