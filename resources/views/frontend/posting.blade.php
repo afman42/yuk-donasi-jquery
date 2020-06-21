@@ -28,14 +28,14 @@
                 $count = 0;
             @endphp
             <div class="col-md-4 mt-4" style="padding-bottom: 150px;">
-                Jumlah Donasi Yang Diperlukan: <span id="jumlah">
+                Jumlah Donasi Yang Diperlukan: <span id="jumlah"> <br>
                 @foreach ($posting->masukan_donasi as $item)
                     @php
                         $count += $item->donasi_masuk;
                     @endphp
                 @endforeach
-                {{ $count }}
-                </span>  / {{ $posting->jumlah_donasi }}
+                @rupiah($count)
+                </span>  /  @rupiah($posting->jumlah_donasi) <br>
                 @if (auth()->check())
                     @if (auth()->user()->hak_akses == 3)
                         <button type="button" class="btn btn-outline-primary" id="createNewProduct">Donasi</button>
@@ -43,6 +43,20 @@
                 @else
                     Silakan Login Terlebih dahulu untuk donasi
                 @endif
+                <table class="table table-hovered">
+                    <tr>
+                        <td>Username Donatur</td>
+                        <td>Jumlah donasi</td>
+                    </tr>
+                    @forelse ($masukan as $item)
+                        <tr>
+                            <td>{{ $item->user->username }}</td>
+                            <td>@rupiah($item->donasi_masuk)</td>
+                        </tr>
+                    @empty
+                        <span>Donasi Masih Kosong</span>
+                    @endforelse
+                </table>
             </div>
         </div>
     </div>

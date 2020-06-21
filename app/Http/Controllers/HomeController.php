@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Berita;
+use App\Models\MasukanDonasi;
 use App\Models\PostingDonasi;
 use App\Models\BiodataDonatur;
 use Validator;
@@ -50,7 +51,10 @@ class HomeController extends Controller
     {
         $posting = PostingDonasi::with(['masukan_donasi','bank'])
                     ->findOrFail($id);
+        $array = $posting->toArray();
+        $masukan = MasukanDonasi::with(['user'])->where('posting_id',$array['id'])->get();
         $user = BiodataDonatur::with('user')->first();
-        return view('frontend.posting',['posting' => $posting,'user' => $user]);
+        // dd($masukan);
+        return view('frontend.posting',['posting' => $posting,'user' => $user, 'masukan' => $masukan]);
     }
 }
