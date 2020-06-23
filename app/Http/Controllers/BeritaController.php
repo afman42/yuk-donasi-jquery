@@ -83,7 +83,7 @@ class BeritaController extends Controller
     public function update(Request $request)
     {
         $rules = array(
-            'judul' => 'required|unique:berita,judul|max:50',
+            'judul' => 'required|max:50',
             'deskripsi' => 'required',
             'gambar' => 'mimes:jpeg,jpg,png',
             'publish' => 'required',
@@ -91,7 +91,6 @@ class BeritaController extends Controller
 
         $messages = [
             'required' => ':attribute harus diisi.',
-            'unique' => ':attribute harus unik',
             'judul.max' => 'Maksimal Judul 50 huruf',
             'gambar.mimes' => 'Gambar berektensi jpeg,jpg,png'
         ];

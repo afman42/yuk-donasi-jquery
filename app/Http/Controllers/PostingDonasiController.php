@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PostingDonasi;
+use App\Models\MasukanDonasi;
 use App\Models\Bank;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -31,14 +32,17 @@ class PostingDonasiController extends Controller
                 })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="javascript:void(0)" data-id="' . $data->id . '"
-                class="btn btn-primary btn-sm editProduct"><i class="fas fa-toolbox"></i></a>';
+                    class="btn btn-primary btn-sm editProduct"><i class="fas fa-toolbox"></i></a>';
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<a href="javascript:void(0)" data-id="' . $data->id . '"
-                class="btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></a>';
+                    class="btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></a>';
                     if ($data->masukan_donasi_count > 0) {
                         $button .= '&nbsp;&nbsp;';
                         $button .= '<a href="javascript:void(0)" data-id="' . $data->id . '" 
                         class="btn btn-info btn-sm pdf-download"><i class="fas fa-file-pdf"></i></a>';
+                        $button .= '&nbsp;&nbsp;';
+                        $button .= '<a href="'.url('/penggalang-dana/posting-donasi/'.$data->id).'"
+                    class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
                     }
                     return $button;
                 })->rawColumns(['gambar','action'])->addIndexColumn()->make(true);
@@ -171,6 +175,13 @@ class PostingDonasiController extends Controller
         }
     }
 
+
+    public function lihat_donasi($id)
+    {
+        $masukan = MasukanDonasi::with(['user'])->where('posting_id',$id)->get();
+        $posting = PostingDonasi::where('id',$id)->first();
+        return view('posting-donasi.lihat-donasi',['masukan' => $masukan, 'posting' => $posting ]);
+    }
 
     public function destroy($id)
     {
