@@ -33,6 +33,33 @@
                 display: none;
             }
         }
+        .navbar1 {
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .navbar1 a {
+            float: left;
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 12px 12px;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .navbar1 a:hover {
+            background: #333;
+            color: black;
+        }
+
+        .navbar1 a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -91,27 +118,21 @@
         <main>
             @yield('content')
         </main>
-        <nav id="bawah" class="navbar fixed-bottom navbar-light bg-light">
-            <ul class="navbar-nav mr-auto mt-lg-0">
+
+        <div class="navbar1 shadow-sm" id="bawah">
             @guest
-              <li class="nav-item">
-                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                <a href="{{ route('login') }}">Login</a>
                 @if (Route::has('register'))
-                    <a class="nav-link" href="{{ route('register') }}">Registrasi</a>
+                    <a href="{{ route('register') }}">Registrasi</a>
                 @endif
-              </li>
             @else
-              <li class="nav-item">
-                {{-- <a class="nav-link" href="#"> {{ Auth::user()->username }}<a> --}}
                 <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
-              </li>
             @endguest
-            </ul>
-        </nav>
+        </div>
     </div>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
