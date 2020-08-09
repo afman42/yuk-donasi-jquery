@@ -28,15 +28,24 @@ YKI | Pengaturan Akun
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <form action="" method="post">
+                @if ($message = Session::get('status'))
+                <div class="alert alert-success alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>	
+                        <strong>{{ $message }}</strong>
+                </div>
+                @endif
+                <form action="{{ route('penggalang-dana.pengaturan-akun-store') }}" method="post">
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Masukan Password">
+                        @csrf
+                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Masukan Password">
+                        @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password-ulang" class="form-control" placeholder="Masukan Password Ulang">
+                        <input type="password" name="password-ulang" class="form-control @error('password-ulang') is-invalid @enderror" placeholder="Masukan Password Ulang">
+                        @error('password-ulang')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">
-                        <input type="submit" name="Ganti Password" class="btn btn-primary">
+                        <input type="submit" value="Ganti Password" class="btn btn-primary">
                     </div>
                 </form>
             </div>

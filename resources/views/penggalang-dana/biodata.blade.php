@@ -33,17 +33,17 @@ YKI | Biodata
                     <div class="form-group">
                         <select name="jenis_kelamin" id="jk" class="form-control @error('jenis_kelamin') is-invalid @enderror"">
                             <option value="">-- Pilih Jenis Kelamin --</option>
-                            <option value="1">Laki - Laki</option>
-                            <option value="0">Perempuan</option>
+                            <option value="1" @if ($biodata !== null && $biodata->jenis_kelamin == 1) {{ 'selected' }} @endif>Laki - Laki</option>
+                            <option value="0" @if ($biodata !== null && $biodata->jenis_kelamin == 2) {{ 'selected' }} @endif>Perempuan</option>
                         </select>
                         @error('jenis_kelamin')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">
-                        <input type="text" name="no_hp" id="no_hp" class="form-control @error('no_hp') is-invalid @enderror" placeholder="Masukan No Hp">
+                        <input type="text" name="no_hp" id="no_hp" <?php if($biodata !== null) { echo "value='"; echo $biodata->no_hp."'";} ?> class="form-control @error('no_hp') is-invalid @enderror" placeholder="Masukan No Hp">
                         @error('no_hp')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">
-                        <textarea name="alamat" id="alamat" rows="3" class="form-control @error('alamat') is-invalid @enderror"></textarea>
+                        <textarea name="alamat" id="alamat" rows="3" class="form-control @error('alamat') is-invalid @enderror"><?php if($biodata !== null) { echo $biodata->alamat;} ?></textarea>
                         @error('alamat')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">

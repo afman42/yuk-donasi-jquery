@@ -143,11 +143,10 @@ class BeritaController extends Controller
 
     public function destroy($id)
     {
-        Berita::find($id)->delete();
-        if ($id) {
-            $model = Berita::find($id)->first();
-            unlink($model->gambar);
-        }
+        $model = Berita::findOrFail($id);
+        // dd($model->gambar);
+        unlink($model->gambar);
+        Berita::find($id)->delete();        
         return response()->json(['success' => 'Data Bank Sukses Terhapus']);
     }
 }

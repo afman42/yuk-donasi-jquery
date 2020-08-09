@@ -21,9 +21,13 @@ YKI | Posting Donasi
       <h3 class="card-title">Posting Donasi</h3>
 
       <div class="card-tools">
-        <button type="button" class="btn btn-default" data-toggle="modal" id="createNewProduct">
-            Tambah
-          </button>
+        @if ($data->bank_count > 0 && $data->biodata_donatur_count > 0)
+            <button type="button" class="btn btn-default" data-toggle="modal" id="createNewProduct">
+                Tambah
+            </button>
+        @else
+            Harap isi biodata dan bank terlebih dahulu
+        @endif
         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
           <i class="fas fa-minus"></i></button>
       </div>

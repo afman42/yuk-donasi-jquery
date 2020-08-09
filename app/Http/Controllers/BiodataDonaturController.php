@@ -11,7 +11,9 @@ class BiodataDonaturController extends Controller
     
     public function index()
     {
-        return view('penggalang-dana.biodata');
+        $biodata = BiodataDonatur::where('user_id',Auth::user()->id)->first();
+        // dd($biodata);
+        return view('penggalang-dana.biodata',['biodata' => $biodata]);
     }
     
     public function store(Request $request)

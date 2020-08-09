@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PostingDonasi;
 use App\Models\MasukanDonasi;
+use App\Models\Pengguna;
 use App\Models\Bank;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -14,7 +15,8 @@ class PostingDonasiController extends Controller
 {
     public function index()
     {
-        
+        $data = Pengguna::withCount(['bank','biodata_donatur'])->where('id',Auth::user()->id)->first();
+        // dd($data);
         if (Request()->ajax()) {
             $model = PostingDonasi::withCount(['masukan_donasi'])->with(['bank'])->where('user_id',Auth::user()->id)->get();
             return datatables()->of($model)
@@ -47,7 +49,7 @@ class PostingDonasiController extends Controller
                     return $button;
                 })->rawColumns(['gambar','action'])->addIndexColumn()->make(true);
         }
-        return view('posting-donasi.index');
+        return view('posting-donasi.index',['data' => $data ]);
     }
 
     public function pdf_posting($id)

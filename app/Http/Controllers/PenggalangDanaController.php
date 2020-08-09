@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Models\Pengguna;
 use Validator;
 class PenggalangDanaController extends Controller
 {
@@ -38,10 +40,9 @@ class PenggalangDanaController extends Controller
         
         if (Auth::attempt($atribut)) {
             $request->session()->put('login', Auth::user()->username);
-
             return response()->json(['success' => 'Berhasil Login.']);
-
-            // return redirect()->route('penggalang-dana.beranda');
+        }else{
+            return response()->json(['error' => 'Username dan Password Gagal']);
         }
     }
 
@@ -55,5 +56,38 @@ class PenggalangDanaController extends Controller
     public function show()
     {
         return view('layouts.login-penggalang');
+    }
+
+
+    public function pengaturan_akun()
+    {
+        return view('penggalang-dana.pengaturan-akun');
+    }
+
+    public function store_pengaturan_akun(Request $request)
+    {
+        $rules = array(
+            'password' => 'required',
+            'password-ulang' => 'required|same:password'
+        );
+
+        $messages = [
+            'required' => ':attribute harus diisi.',
+            'same' => ':attribute harus sama.',
+        ];
+
+        $error = Validator::make($request->all(), $rules,$messages);
+        if ($error->fails()) {
+            return redirect(route('penggalang-dana.pengaturan-akun'))
+                        ->withErrors($error)
+                        ->withInput();
+        }
+        
+        $model = Pengguna::whereId(Auth::user()->id)->update(['password' => Hash::make($request->password)]);
+        if($model) {
+            $request->session()->flash('status', 'Password Berhasil diubah');
+        }
+
+        return view('penggalang-dana.pengaturan-akun');
     }
 }

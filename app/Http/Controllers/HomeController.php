@@ -37,6 +37,7 @@ class HomeController extends Controller
               ->where('tanggal_akhir_selesai','>=',now())
               ->where('publish',1)
               ->paginate(4,['*'],'halaman_donasi');
+        // dd(now());
         return view('home',['posting' => $posting, 'berita' => $berita]);
     }
 

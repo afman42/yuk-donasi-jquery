@@ -47,7 +47,7 @@ YKI | Donatur
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="modelHeading">Tambah Akun Penggalang Dana</h4>
+          <h4 class="modal-title" id="modelHeading">Ubah Nama Donatur</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -76,7 +76,7 @@ YKI | Donatur
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modelHeading">Hapus Akun Penggalang Dana</h5>
+                <h5 class="modal-title" id="modelHeading">Hapus Akun Donatur</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 </button>
             </div>

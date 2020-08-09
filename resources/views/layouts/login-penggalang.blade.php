@@ -98,6 +98,9 @@
                                 toast = toastr.error("" + data.errors[count] + "");
                             }
                         }
+                        if (data.error) {
+                            toast = toastr.error(data.error)
+                        }
                         if (data.success) {
                             $('#contoh-form')[0].reset();
                             toast = toastr.success(data.success);

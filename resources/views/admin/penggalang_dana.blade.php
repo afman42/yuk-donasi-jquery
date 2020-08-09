@@ -47,7 +47,7 @@ YKI | Penggalang Dana
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="modelHeading">Tambah Akun Penggalang Dana</h4>
+          <h4 class="modal-title" id="modelHeading">Ubah Nama Penggalang Dana</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

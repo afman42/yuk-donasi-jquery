@@ -12,7 +12,7 @@ class BankController extends Controller
     public function index()
     {
         if (Request()->ajax()) {
-            $model = Bank::all();
+            $model = Bank::where('user_id',auth()->user()->id)->get();
             return datatables()->of($model)
                 // ->addColumn('wilayah', function (WilayahBagian $wilayahbagian) {
                 //     return $wilayahbagian->wilayah->nama_wilayah;

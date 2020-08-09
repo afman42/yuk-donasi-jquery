@@ -31,4 +31,9 @@ class Pengguna extends Authenticatable
     {
         return $this->hasOne('App\Models\BiodataDonatur','user_id','id');
     }
+
+    public function bank()
+    {
+        return $this->hasOne('App\Models\Bank','user_id','id');
+    }
 }

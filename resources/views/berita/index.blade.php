@@ -90,7 +90,7 @@ YKI | Berita
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modelHeading">Hapus Bank</h5>
+                <h5 class="modal-title" id="modelHeading">Hapus Berita</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 </button>
             </div>
@@ -229,7 +229,7 @@ YKI | Berita
         $(document).on('click', '.delete', function() {
             product_id = $(this).data("id");
             $.get("{{ url('admin/getberita') }}" + '/' + product_id, function(data) {
-                $('#yakinHapus').text('Yakin Menghapus Atas Nama ' + data.judul + ' ?')
+                $('#yakinHapus').text('Yakin Menghapus Atas Judul ' + data.judul + ' ?')
             })
             $('#ajaxHapus').modal('show');
         });

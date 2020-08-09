@@ -320,9 +320,6 @@ class AdminController extends Controller
         $error = Validator::make($request->all(), $rules,$messages);
 
         if ($error->fails()) {
-            // return redirect(route('penggalang-dana.beranda'))
-            //             ->withErrors($error)
-            //             ->withInput();
             return response()->json(['errors' => $error->errors()->all()]);
 
         }
@@ -334,6 +331,8 @@ class AdminController extends Controller
 
             return response()->json(['success' => 'Berhasil Login.']);
             // return redirect()->route('admin.index');
+        }else{
+            return response()->json(['error' => 'Username dan Password Gagal']);
         }
     }
 

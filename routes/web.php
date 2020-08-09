@@ -63,7 +63,8 @@ Route::group(['middleware' => ['web', 'ceklogin']], function () {
 Route::group(['middleware' => ['web', 'cekloginpenggalangdana']], function () {
     Route::prefix('penggalang-dana')->group(function () {
         Route::get('/','PenggalangDanaController@beranda')->name('penggalang-dana.beranda');
-        Route::get('pengaturan-akun','PenggalangDanaController@pengaturan_akun')->name('penggalang-dana.pengaturan-akun');    
+        Route::get('pengaturan-akun','PenggalangDanaController@pengaturan_akun')->name('penggalang-dana.pengaturan-akun');
+        Route::post('pengaturan-akun','PenggalangDanaController@store_pengaturan_akun')->name('penggalang-dana.pengaturan-akun-store');
         Route::post('logout','PenggalangDanaController@logout')->name('penggalang-dana.logout');
     
         //Biodata Routes
