@@ -30,9 +30,11 @@
             <div class="col-md-4 mt-4" style="padding-bottom: 150px;">
                 Jumlah Donasi Yang Diperlukan: <span id="jumlah"> <br>
                 @foreach ($posting->masukan_donasi as $item)
-                    @php
-                        $count += $item->donasi_masuk;
-                    @endphp
+                    @if($item->status_konfirmasi == 'terima')
+                        @php
+                            $count += $item->donasi_masuk;
+                        @endphp
+                    @endif
                 @endforeach
                 @rupiah($count)
                 </span>  /  @rupiah($posting->jumlah_donasi) <br>
@@ -49,8 +51,15 @@
                         <td>Jumlah donasi</td>
                     </tr>
                     @forelse ($masukan as $item)
+                       
                         <tr>
-                            <td>{{ $item->user->username }}</td>
+                            <td>{{ $item->user->username }} - 
+                                @if ($item->status_konfirmasi == 'proses')
+                                    <span class="badge badge-light">proses</span>
+                                @elseif($item->status_konfirmasi == 'terima')
+                                    <span class="badge badge-info">terima</span> 
+                                @endif
+                            </td>
                             <td>@rupiah($item->donasi_masuk)</td>
                         </tr>
                     @empty
@@ -76,6 +85,10 @@
                         <div class="form-group">
                             <label for="photo">Photo Struk</label>
                             <input type="file" name="photo_struk" id="photo_struk" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="nama_bank">Nama Bank</label>
+                            <input type="text" name="nama_bank" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="donasi_masuk">Donasi Masuk</label>

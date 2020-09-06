@@ -13,6 +13,7 @@ class MasukanDonasiController extends Controller
     {
         $rules = array(
             'photo_struk' => 'required|mimes:jpeg,jpg,png',
+            'nama_bank' => 'required',
             'donasi_masuk' => 'required',
         );
 
@@ -33,9 +34,12 @@ class MasukanDonasiController extends Controller
         MasukanDonasi::create([
             'photo_struk' => $newName,
             'donasi_masuk' => $request->donasi_masuk,
+            'nama_bank' => $request->nama_bank,
             'user_id' => Auth::user()->id,
             'posting_id' => $request->posting_id
         ]);
+
+        //dd($request->nama_bank);
 
         return response()->json(['success' => 'Masukan Donasi Berhasil.']);
     }

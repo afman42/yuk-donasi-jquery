@@ -185,6 +185,28 @@ class PostingDonasiController extends Controller
         return view('posting-donasi.lihat-donasi',['masukan' => $masukan, 'posting' => $posting ]);
     }
 
+    public function batal_donasi(Request $request,$id)
+    {
+        $masukan = MasukanDonasi::where('id',$id)->first();
+        $masukan->status_konfirmasi = 'batal';
+        $model = $masukan->save();
+        if($model) {
+            $request->session()->flash('status', 'Konfirmasi donasi dibatal');
+        }
+        return redirect(route('posting.lihatdonasi',['id' => $masukan->posting_id]));
+    }
+
+    public function terima_donasi(Request $request,$id)
+    {
+        $masukan = MasukanDonasi::where('id',$id)->first();
+        $masukan->status_konfirmasi = 'terima';
+        $model = $masukan->save();
+        if($model) {
+            $request->session()->flash('status', 'Konfirmasi donasi diterima');
+        }
+        return redirect(route('posting.lihatdonasi',['id' => $masukan->posting_id]));
+    }
+
     public function destroy($id)
     {
         PostingDonasi::find($id)->delete();

@@ -53,7 +53,7 @@ class HomeController extends Controller
         $posting = PostingDonasi::with(['masukan_donasi','bank'])
                     ->findOrFail($id);
         $array = $posting->toArray();
-        $masukan = MasukanDonasi::with(['user'])->where('posting_id',$array['id'])->get();
+        $masukan = MasukanDonasi::with(['user'])->where('posting_id',$array['id'])->where('status_konfirmasi','!=','batal')->get();
         $user = BiodataDonatur::with('user')->first();
         // dd($masukan);
         return view('frontend.posting',['posting' => $posting,'user' => $user, 'masukan' => $masukan]);

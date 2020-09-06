@@ -78,7 +78,9 @@ Route::group(['middleware' => ['web', 'cekloginpenggalangdana']], function () {
         Route::post('posting-donasi/destroy/{id}','PostingDonasiController@destroy');
         Route::get('postingdonasiid','PostingDonasiController@postingid')->name('posting.postingid');
         Route::get('getposting/{id}','PostingDonasiController@getposting');
-        Route::get('posting-donasi/{id}', 'PostingDonasiController@lihat_donasi');
+        Route::get('posting-donasi/{id}', 'PostingDonasiController@lihat_donasi')->name('posting.lihatdonasi');
+        Route::get('posting-donasi/batal/{id}', 'PostingDonasiController@batal_donasi')->name('posting.bataldonasi');
+        Route::get('posting-donasi/terima/{id}', 'PostingDonasiController@terima_donasi')->name('posting.terimadonasi');
 
         //Bank Routes
         Route::resource('bank','BankController')->only(['index','store']);

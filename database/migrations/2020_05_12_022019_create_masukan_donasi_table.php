@@ -16,7 +16,10 @@ class CreateMasukanDonasiTable extends Migration
         Schema::create('masukan_donasi', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
+            $table->integer('posting_id');
             $table->string('photo_struk');
+            $table->string('nama_bank')->nullable();
+            $table->enum('status_konfirmasi', ['batal', 'terima','proses'])->default('proses');
             $table->integer('donasi_masuk');
             $table->timestamps();
         });

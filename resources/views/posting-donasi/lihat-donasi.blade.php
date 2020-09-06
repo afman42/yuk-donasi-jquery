@@ -25,6 +25,12 @@ YKI | Lihat Posting Donasi
       </div>
     </div>
     <div class="card-body">
+        @if ($message = Session::get('status'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button> 
+                <strong>{{ $message }}</strong>
+            </div>
+        @endif
         <table id="table" class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -32,6 +38,8 @@ YKI | Lihat Posting Donasi
                     <th>Username Donatur</th>
                     <th>Gambar</th>
                     <th>Donasi Masuk</th>
+                    <th>Nama Bank</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
                 @forelse ($masukan as $item)
@@ -40,6 +48,14 @@ YKI | Lihat Posting Donasi
                         <td>{{ $item->user->username }}</td>
                     <td><a href="{{ url($item->photo_struk) }}" data-lightbox="image-{{ $item->id }}"><img src="{{ url($item->photo_struk) }}" width="100" height="100"></a></td>
                         <td>{{ $item->donasi_masuk }}</td>
+                        <td>{{ $item->nama_bank }}</td>
+                        <td>
+                            @if($item->status_konfirmasi == 'proses')
+                                <a href="{{ route('posting.bataldonasi', ['id' => $item ]) }}" class="btn btn-sm btn-primary">Batal</a> &nbsp; <a href="{{ route('posting.terimadonasi', ['id' => $item ]) }}" class="btn btn-sm btn-success">Terima</a>
+                            @else
+                                Tidak Ada Aksi - {{ $item->status_konfirmasi }}
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr>

@@ -22,7 +22,6 @@ class CreatePostingDonasiTable extends Migration
             $table->date('tanggal_mulai_selesai');
             $table->date('tanggal_akhir_selesai');
             $table->integer('bank_id');
-            $table->integer('masukan_donasi_id');
             $table->integer('user_id');
             $table->integer('publish');
             $table->timestamps();
