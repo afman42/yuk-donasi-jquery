@@ -59,6 +59,7 @@ class PostingDonasiController extends Controller
                 ->select('*')
                 ->join('posting_donasi', 'posting_donasi.id', '=', 'masukan_donasi.posting_id')
                 ->join('user', 'user.id', '=', 'masukan_donasi.user_id')
+                ->where('masukan_donasi.status_konfirmasi','terima')
                 ->where('masukan_donasi.posting_id', $id)
                 ->get();
         $pdf = \PDF::loadView('posting-donasi.pdf-posting', ['data' => $data]);

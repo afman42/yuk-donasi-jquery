@@ -14,6 +14,8 @@
         <tr>
           <th>No</th>
           <th>Username donatur</th>
+          <th>Bank</th>
+          <th>Photo</th>
           <th>Masukan Donasi</th>
         </tr>
       </thead>
@@ -25,6 +27,8 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $posting->username }}
+                <td>{{ $posting->nama_bank }}</td>
+                <td><img src="{{ url($posting->photo_struk) }}" width="100" width="100"></td>
                 <td>{{ $posting->donasi_masuk }}</td>
             </tr>
             @php
@@ -35,7 +39,7 @@
         @endforelse
             
             <tr>
-                <td colspan="2">Jumlah Donasi Terkumpul</td>
+                <td colspan="4">Jumlah Donasi Terkumpul</td>
                 <td>{{ $jumlah }}</td>
             </tr>
       </tbody>
